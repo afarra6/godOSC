@@ -1,6 +1,7 @@
+@icon("res://addons/godOSC/images/OSCClient.svg")
 class_name OSCClient
 extends Node
-## Client for sending Open Sound Control messages over UDP. 
+## Client for sending Open Sound Control messages over UDP. Use one OSCClient per server you want to send to.
 
 ## The IP Address of the server to send to.
 @export var ip_address = "127.0.0.1"
@@ -13,11 +14,13 @@ func _ready():
 	connect_socket(ip_address, port)
 
 
+## Connect to an OSC server. Can only send to one OSC server at a time.
 func connect_socket(new_ip = "127.0.0.1", new_port = 4646):
 	client.set_dest_address(new_ip, new_port)
 	print(client.is_socket_connected())
 
 
+## Send an OSC message over UDP.
 func send_message(osc_address : String, args : Array):
 	var packet = PackedByteArray()
 	var args_array = PackedByteArray()
@@ -28,7 +31,7 @@ func send_message(osc_address : String, args : Array):
 	while fmod(packet.size(), 4):
 		packet.append(0) 
 	
-	print(packet)
+	
 	packet.append(44)
 	
 	for i in range(len(args)):
@@ -55,7 +58,3 @@ func send_message(osc_address : String, args : Array):
 	client.put_packet(packet)
 
 
-
-func change_address(new_ip, new_port):
-	client.set_dest_address(new_ip, new_port)
-	

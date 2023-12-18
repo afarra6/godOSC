@@ -1,3 +1,4 @@
+@icon("res://addons/godOSC/images/OSCServer.svg")
 class_name OSCServer
 extends Node
 ## Server for recieving Open Sound Control messages over UDP. 
@@ -23,6 +24,7 @@ func _ready():
 	server.listen(port)
 
 
+## Sets the port for the server to listen on. Can only listen to one port at a time.
 func listen(new_port):
 	if new_port == port:
 		server.listen(port)
@@ -39,7 +41,7 @@ func _process(_delta):
 		var packet = peer.get_packet()
 		print("Accepted peer: %s:%s" % [peer.get_packet_ip(), peer.get_packet_port()])
 		print("Received data: %s" % [packet.get_string_from_utf8()])
-		print(packet)
+		
 		# Reply so it knows we received the message.
 		peer.put_packet(packet)
 		# Keep a reference so we can keep contacting the remote peer.
@@ -48,6 +50,7 @@ func _process(_delta):
 	parse()
 
 
+## Parses an OSC packet. This is not intended to be called directly outside of the OSCServer
 func parse():
 	for i in range(0, peers.size()):
 		var packet = peers[i].get_packet()

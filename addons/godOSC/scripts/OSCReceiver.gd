@@ -1,7 +1,9 @@
+@icon("res://addons/godOSC/images/OSCReceiver.svg")
 class_name OSCReceiver
 extends Node
 ## Generic node for Receiving OSC messages. Must have an active OSCServer in the scene to work. 
-## Make this node the child of a node you want to control with OSC.
+## Make this node the child of a node you want to control with OSC. To add your own code, extend the 
+## script attached to the OSCReceiver you create by right clicking and "extend script"
 
 ## The OSCServer to receive messages from
 @export var target_server : OSCServer
@@ -21,17 +23,17 @@ func _process(delta):
 	
 	# IMPORTANT! You must check if the server has received a message on the correct address. The example below
 	# checks if the server has received an OSC message at the address "/example" and then prints the first value
-	# sent with the message
-	if target_server.incoming_messages.has(osc_address):
-		print(target_server.incoming_messages[osc_address][0])
-		
-		# This example changes the scale of a Node2D
-		
-		#parent.scale = Vector2(1,1) * target_server.incoming_messages[osc_address][0]
-		
-		# This example changes the scale of a Node3D
-		
-		#parent.scale = Vector3(1,1,1) * target_server.incoming_messages[osc_address][0]
-		
-	
+	# sent with the message.
+#	if target_server.incoming_messages.has(osc_address):
+#		print(target_server.incoming_messages[osc_address][0])
+#
+#		# This example changes the scale of a Node2D
+#
+#		#parent.scale = Vector2(1,1) * target_server.incoming_messages[osc_address][0]
+#
+#		# This example changes the scale of a Node3D
+#
+#		#parent.scale = Vector3(1,1,1) * target_server.incoming_messages[osc_address][0]
+#
+#
 	pass
