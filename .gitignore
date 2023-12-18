@@ -13,3 +13,10 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# External editors
+.vscode/
+
+# Directories
+.DS_Store
+.directory
