@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-0.302701,0)">
+        <text x="0.508px" y="13.773px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:7.184px;">OSC</text>
+    </g>
+    <path d="M4.054,6.984C4.054,6.984 5.33,4.951 7.989,4.973C10.649,4.995 12.011,6.984 12.011,6.984" style="fill:none;stroke:black;stroke-width:1px;"/>
+    <g transform="matrix(1,0,0,1,0,-2.05405)">
+        <path d="M0.984,9.038C0.984,9.038 2.885,4.915 7.989,4.973C13.437,5.035 14.995,9.016 14.995,9.016" style="fill:none;stroke:black;stroke-width:1px;"/>
+    </g>
+</svg>
