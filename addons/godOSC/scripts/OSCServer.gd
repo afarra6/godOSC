@@ -66,7 +66,8 @@ func parse():
 		var vals = []
 		
 		for j in packet.slice(comma+1, comma + 1 + args):
-			flags.append(j)
+			if j != 0:
+				flags.append(j)
 		
 		packet.reverse()
 		flags.reverse()
