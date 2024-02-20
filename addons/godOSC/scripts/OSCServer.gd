@@ -15,7 +15,7 @@ var incoming_messages := {}
 ## A simple way to determine
 ## a reasonable parse rate would be to use the following equation:
 ## amount of recieved messages * average message rate / 60.
-@export var parse_rate = 10
+#@export var parse_rate = 10 deprecated
 var server = UDPServer.new()
 var peers: Array[PacketPeerUDP] = []
 
