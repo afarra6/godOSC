@@ -13,48 +13,65 @@ var client = PacketPeerUDP.new()
 func _ready():
 	connect_socket(ip_address, port)
 
-
 ## Connect to an OSC server. Can only send to one OSC server at a time.
 func connect_socket(new_ip = "127.0.0.1", new_port = 4646):
+	close_socket()
 	client.set_dest_address(new_ip, new_port)
-	print(client.is_socket_connected())
 
+func close_socket():
+	if client.is_socket_connected():
+		client.close()
 
 ## Send an OSC message over UDP.
-func send_message(osc_address : String, args : Array):
+func prepare_message(osc_address : String, args : Array):
 	var packet = PackedByteArray()
-	var args_array = PackedByteArray()
 	
 	packet.append_array(osc_address.to_ascii_buffer())
-	packet.append_array([0])
 	
+	packet.append(0)
 	while fmod(packet.size(), 4):
-		packet.append(0) 
-	
+		packet.append(0)
 	
 	packet.append(44)
-	
-	for i in range(len(args)):
-		var to_append = PackedByteArray([0,0,0,0])
-		
-		match typeof(args[i]):
+	for arg in args:
+		match typeof(arg):
 			TYPE_INT:
 				packet.append(105)
-				to_append.encode_s32(0, args[i])
-				to_append.reverse()
-				args_array.append_array(to_append)
 			TYPE_FLOAT:
 				packet.append(102)
-				to_append.encode_float(0, args[i])
-				to_append.reverse()
-				args_array.append_array(to_append)
+			TYPE_STRING:
+				packet.append(115)
+			TYPE_PACKED_BYTE_ARRAY:
+				packet.append(98)
 	
-	if fmod(packet.size(), 4) == 0:
-		packet.append_array([0,0,0,0])
+	packet.append(0)
 	while fmod(packet.size(), 4):
-		packet.append(0) 
+		packet.append(0)
 	
-	packet.append_array(args_array)
+	for arg in args:
+		var pack = PackedByteArray()
+		match typeof(arg):
+			TYPE_INT:
+				pack.append_array([0, 0, 0, 0])
+				pack.encode_s32(0, arg)
+				pack.reverse()
+			TYPE_FLOAT:
+				pack.append_array([0, 0, 0, 0])
+				pack.encode_float(0, arg)
+				pack.reverse()
+			TYPE_STRING:
+				pack.append_array(arg.to_ascii_buffer())
+				pack.append(0)
+				while fmod(pack.size(), 4):
+					pack.append(0)
+			TYPE_PACKED_BYTE_ARRAY:
+				pack.append_array(arg)
+				while fmod(pack.size(), 4):
+					pack.append(0)
+		packet.append_array(pack)
+	
+	return packet
+
+func send_message(osc_address : String, args : Array):
+	var packet = prepare_message(osc_address, args)
 	client.put_packet(packet)
-
-
