@@ -95,7 +95,7 @@ func parse_bundle(packet: PackedByteArray):
 	var bund_ind = 0
 	var messages = []
 	
-	print(packet)
+	# Find beginning of messages in bundle
 	for i in range(packet.size()/4.0):
 		var bund_arr = PackedByteArray([32,0,0,0])
 		var testo = ""
@@ -105,15 +105,11 @@ func parse_bundle(packet: PackedByteArray):
 			
 		elif packet[i*4+1] == 47 and packet[i*4 - 1] <= 0:
 			mess_num.append(i*4-4)
-			
-		#for j in range(packet.size()):
-			#
-		
 		
 		
 		pass
 	
-	
+	# Add messages to an array
 	for i in range(len(mess_num)):
 		
 		if i < len(mess_num) - 1:
@@ -123,7 +119,7 @@ func parse_bundle(packet: PackedByteArray):
 		
 	
 	
-	
+	# Iterate and parse the messages
 	for bund_packet in messages:
 		print(bund_packet)
 		var comma_index = bund_packet.find(44)
