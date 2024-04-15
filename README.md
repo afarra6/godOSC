@@ -1,5 +1,5 @@
 # GodOSC
-Implementation of the Open Sound Control protocol in Godot using GDScript and a group of nodes for convenient use. GodOSC receives and sends OSC messages over UDP. Currently supports OSC messages (but not bundles), floats, integers, strings, and blobs.
+Implementation of the Open Sound Control protocol in Godot using GDScript and a group of nodes for convenient use. GodOSC receives and sends OSC messages over UDP. Currently supports OSC messages (now with experimental bundle support), floats, integers, strings, and blobs.
 
 
 # OSCServer
