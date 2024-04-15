@@ -89,15 +89,27 @@ func parse_message(packet: PackedByteArray):
 #Handle and parse incoming bundles
 func parse_bundle(packet: PackedByteArray):
 	
+	
 	packet = packet.slice(7)
 	var mess_num = []
-	var bund_ind = 1
+	var bund_ind = 0
 	var messages = []
+	
+	print(packet)
 	for i in range(packet.size()/4.0):
-		
-		if packet.slice(i*4, i*4+5) == PackedByteArray([bund_ind, 0, 0, 0, 16]) or packet.slice(i*4, i*4+5) == PackedByteArray([bund_ind, 0, 0, 0, 47]):
+		var bund_arr = PackedByteArray([32,0,0,0])
+		var testo = ""
+		if packet.slice(i*4, i*4+4) == PackedByteArray([1, 0, 0, 0]) or packet.slice(i*4, i*4+4) == bund_arr:
 			mess_num.append(i*4)
 			bund_ind + 1
+			
+		elif packet[i*4+1] == 47 and packet[i*4 - 1] <= 0:
+			mess_num.append(i*4-4)
+			
+		#for j in range(packet.size()):
+			#
+		
+		
 		
 		pass
 	
@@ -113,6 +125,7 @@ func parse_bundle(packet: PackedByteArray):
 	
 	
 	for bund_packet in messages:
+		print(bund_packet)
 		var comma_index = bund_packet.find(44)
 		var address = bund_packet.slice(0, comma_index).get_string_from_ascii()
 		var args = bund_packet.slice(comma_index, packet.size())
