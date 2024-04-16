@@ -99,11 +99,11 @@ func parse_bundle(packet: PackedByteArray):
 	for i in range(packet.size()/4.0):
 		var bund_arr = PackedByteArray([32,0,0,0])
 		var testo = ""
-		if packet.slice(i*4, i*4+4) == PackedByteArray([1, 0, 0, 0]) or packet.slice(i*4, i*4+4) == bund_arr:
+		if packet.slice(i*4, i*4+4) == PackedByteArray([1, 0, 0, 0]):
 			mess_num.append(i*4)
 			bund_ind + 1
 			
-		elif packet[i*4+1] == 47 and packet[i*4 - 1] <= 0:
+		elif packet[i*4+1] == 47 and packet[i*4 - 2] <= 0 and packet.slice(i*4 - 4, i*4) != PackedByteArray([1, 0, 0, 0]):
 			mess_num.append(i*4-4)
 		
 		
@@ -112,21 +112,29 @@ func parse_bundle(packet: PackedByteArray):
 	# Add messages to an array
 	for i in range(len(mess_num)):
 		
-		if i < len(mess_num) - 1:
-			messages.append(packet.slice(mess_num[i]+4, mess_num[i+1]))
+		if i  < len(mess_num) - 1:
+			messages.append(packet.slice(mess_num[i]+4, mess_num[i+1]+1))
 		else:
-			messages.append(packet.slice(mess_num[i]+4))
+			var pack = packet.slice(mess_num[i]+4)
+			
+			messages.append(pack)
+			
+			
 		
 	
 	
 	# Iterate and parse the messages
 	for bund_packet in messages:
-		print(bund_packet)
+		
+		bund_packet.remove_at(0)
+		bund_packet.insert(0,0)
+		#print(bund_packet)
 		var comma_index = bund_packet.find(44)
-		var address = bund_packet.slice(0, comma_index).get_string_from_ascii()
+		var address = bund_packet.slice(1, comma_index).get_string_from_ascii()
 		var args = bund_packet.slice(comma_index, packet.size())
 		var tags = args.get_string_from_ascii()
 		var vals = []
+		
 		
 		args = args.slice(ceili((tags.length() + 1) / 4.0) * 4, args.size())
 		
@@ -155,3 +163,4 @@ func parse_bundle(packet: PackedByteArray):
 				
 		print(address, " ", vals)
 		incoming_messages[address] = vals
+		
