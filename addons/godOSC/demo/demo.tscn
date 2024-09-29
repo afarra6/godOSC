@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://nqupygtbema1"]
 
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCClient.gd" id="1_8dhcu"]
-[ext_resource type="Script" path="res://addons/godOSC/demo/demo_message.gd" id="2_6fq7l"]
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver.gd" id="4_47v2p"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver2.gd" id="5_qly6e"]
-[ext_resource type="Script" path="res://addons/godOSC/demo/demo_message2.gd" id="6_deeug"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/test_message.gd" id="5_sb0re"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -49,9 +49,18 @@ max_value = 600.0
 value = 300.0
 
 [node name="OSCMessage" type="Node" parent="Cube 1 Slider" node_paths=PackedStringArray("target_client")]
-script = ExtResource("2_6fq7l")
+script = ExtResource("5_sb0re")
 target_client = NodePath("../../OSCClient")
 osc_address = "/cube1"
+
+[node name="CheckButton" type="CheckButton" parent="Cube 1 Slider"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -36.0
+offset_right = 40.0
+offset_bottom = -12.0
+button_pressed = true
+script = ExtResource("6_4gcvd")
 
 [node name="Cube 2 Slider" type="HSlider" parent="."]
 offset_left = 796.0
@@ -63,6 +72,24 @@ step = 0.01
 value = 1.0
 
 [node name="OSCMessage" type="Node" parent="Cube 2 Slider" node_paths=PackedStringArray("target_client")]
-script = ExtResource("6_deeug")
+script = ExtResource("5_sb0re")
 target_client = NodePath("../../OSCClient")
 osc_address = "/cube2"
+
+[node name="CheckButton" type="CheckButton" parent="Cube 2 Slider"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -31.0
+offset_right = 35.0
+offset_bottom = -7.0
+button_pressed = true
+script = ExtResource("6_4gcvd")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 311.0
+offset_top = 444.0
+offset_right = 858.0
+offset_bottom = 684.0
+text = "Use the toggles to enable/disable the sliders from sending OSC messages.
+If you are testing using an external program, disable the sliders for more
+predictable behavior."

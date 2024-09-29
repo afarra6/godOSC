@@ -9,6 +9,8 @@ extends Node
 ## The OSC address to send to
 @export var osc_address := "/example"
 
+## Allow the OSCMessage to send messages using the OSCClient.
+@export var enabled := true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,5 +21,14 @@ func _ready():
 func _process(delta):
 	
 	# Sends 0 to the target OSC address
-	target_client.send_message(osc_address, [0])
+	
 	pass
+
+
+func update_message(value):
+	
+	if value is Array and enabled:
+		target_client.send_message(osc_address, value)
+	elif enabled:
+		target_client.send_message(osc_address, [value])
+	

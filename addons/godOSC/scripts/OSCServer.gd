@@ -50,7 +50,7 @@ func parse():
 				parse_message(packet)
 
 func parse_message(packet: PackedByteArray):
-	print(packet)
+	#print(packet)
 	var comma_index = packet.find(44)
 	var address = packet.slice(0, comma_index).get_string_from_ascii()
 	var args = packet.slice(comma_index, packet.size())
