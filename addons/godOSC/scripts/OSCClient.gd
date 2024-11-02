@@ -35,6 +35,11 @@ func prepare_message(osc_address : String, args : Array):
 	packet.append(44)
 	for arg in args:
 		match typeof(arg):
+			TYPE_BOOL:
+				if arg:
+					packet.append(84)
+				else:
+					packet.append(70)
 			TYPE_INT:
 				packet.append(105)
 			TYPE_FLOAT:
@@ -51,6 +56,13 @@ func prepare_message(osc_address : String, args : Array):
 	for arg in args:
 		var pack = PackedByteArray()
 		match typeof(arg):
+			TYPE_BOOL:
+				if arg:
+					pack.append_array([1])
+					pack.reverse()
+				else:
+					pack.append_array([0])
+					pack.reverse()
 			TYPE_INT:
 				pack.append_array([0, 0, 0, 0])
 				pack.encode_s32(0, arg)
