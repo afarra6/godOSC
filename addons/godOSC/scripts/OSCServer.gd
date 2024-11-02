@@ -64,6 +64,10 @@ func parse_message(packet: PackedByteArray):
 		match tag:
 			44: #,: comma
 				pass
+			70: # Boolean OFF
+				vals.append(false)
+			84: # Boolean ON
+				vals.append(true)
 			105: #i: int32
 				var val = args.slice(0, 4)
 				val.reverse()
