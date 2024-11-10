@@ -3,6 +3,8 @@ class_name OSCServer
 extends Node
 ## Server for recieving Open Sound Control messages over UDP. 
 
+## Signal emmited when receiving single messages.
+signal OSC_Received(key, val)
 
 ## The port over which to recieve messages
 @export var port = 4646
@@ -88,6 +90,7 @@ func parse_message(packet: PackedByteArray):
 			
 	
 	incoming_messages[address] = vals
+	OSC_Received.emit(address, vals)
 
 
 #Handle and parse incoming bundles
