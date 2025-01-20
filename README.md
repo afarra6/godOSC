@@ -15,6 +15,7 @@ Alternatively, OSCServer emits a signal when a new message is received which inc
 # OSCClient
 The OSCClient is used to send OSC messages to an OSC server, either in Godot or an outside program. OSCClients can only send to one server at a time but are able to send multiple messages to multiple addresses. Essentially you should have a 1:1 client-to-server ratio.
 
+Currently does not support sending bundles.
 
 # OSCReceiver
 A convenience node for controlling nodes with OSC messages. Attach an OSCReceiver to a node you'd like to manipulate and then *extend* the script on the OSCReceiver.
