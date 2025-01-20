@@ -39,3 +39,4 @@ Below are links to demo projects using common electronic music software:
 
 * Supercollider - https://github.com/afarra6/sc-osc-demo
 * Max 8 - https://github.com/afarra6/max-osc-demo
+* PureData - https://github.com/afarra6/pd-osc-demo
