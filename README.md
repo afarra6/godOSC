@@ -1,5 +1,5 @@
 # GodOSC
-Implementation of the Open Sound Control protocol in Godot using GDScript and a group of nodes for convenient use. GodOSC receives and sends OSC messages over UDP. Currently supports OSC messages (now with experimental bundle support), floats, integers, strings, and blobs.
+Implementation of the Open Sound Control protocol in Godot using GDScript and a group of nodes for convenient use. GodOSC receives and sends OSC messages over UDP. Currently supports OSC messages (now with experimental bundle support), booleans (thanks to NovMot) floats, integers, strings, and blobs.
 
 
 # OSCServer
@@ -9,7 +9,7 @@ The OSCServer sets up a UDPServer to receive and parse OSC messages. These messa
 "/example/address", [value1, value2, value]
 }
 
-OSCServer supports floats and ints.
+Alternatively, OSCServer emits a signal when a new message is received which includes the Address, Value, and a Time stamp.
 
 
 # OSCClient
@@ -29,7 +29,7 @@ if target_server.incoming_messages.has(osc_address):
 # OSCMessage
 A convenience node for creating an OSC message. This can be placed anywhere within your scene but an OSCClient must be present to work. Again, make sure to *extend* the script on the OSC message to add your own code.
 
-Use the method update_message(value) where the value can be either an array or a discrete value to send a message using the OSCMessage node.
+Use the method send_message(value) where the value can be either an array or a discrete value to send a message using the OSCMessage node.
 
 
 
@@ -38,4 +38,5 @@ Use the method update_message(value) where the value can be either an array or a
 Below are links to demo projects using common electronic music software:
 
 * Supercollider - https://github.com/afarra6/sc-osc-demo
-
+* Max 8 - https://github.com/afarra6/max-osc-demo
+* PureData - https://github.com/afarra6/pd-osc-demo
