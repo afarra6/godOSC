@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bm6y1lbln2iqs"]
-
-[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="1_lx3eg"]
-
-[node name="test" type="Node2D"]
-
-[node name="OSCServer" type="Node" parent="."]
-script = ExtResource("1_lx3eg")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://nqupygtbema1"]
+[gd_scene load_steps=9 format=3 uid="uid://nqupygtbema1"]
 
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCClient.gd" id="1_8dhcu"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/demo.gd" id="1_jcc48"]
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver.gd" id="4_47v2p"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver2.gd" id="5_qly6e"]
@@ -8,7 +9,8 @@
 [ext_resource type="Script" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/MessageContainer.gd" id="8_7cxcq"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Demo" type="Node2D"]
+script = ExtResource("1_jcc48")
 
 [node name="OSCClient" type="Node" parent="."]
 script = ExtResource("1_8dhcu")
@@ -126,4 +128,26 @@ layout_mode = 2
 [node name="Time1" type="Label" parent="MessageContainer"]
 layout_mode = 2
 
+[node name="GateOn" type="Button" parent="."]
+offset_left = 65.0
+offset_top = 566.0
+offset_right = 259.0
+offset_bottom = 620.0
+text = "SEND \"/synth1/gate 1\" 
+ON PORT 4848"
+
+[node name="GateOff" type="Button" parent="."]
+offset_left = 378.0
+offset_top = 566.0
+offset_right = 582.0
+offset_bottom = 620.0
+text = "SEND \"/synth1/gate 0\"
+ ON PORT 4848"
+
+[node name="OSCClient - OUT" type="Node" parent="."]
+script = ExtResource("1_8dhcu")
+port = 4848
+
 [connection signal="message_received" from="OSCServer" to="MessageContainer" method="_on_osc_server_message_received"]
+[connection signal="button_down" from="GateOn" to="." method="_on_gate_on_button_down"]
+[connection signal="button_down" from="GateOff" to="." method="_on_gate_off_button_down"]
