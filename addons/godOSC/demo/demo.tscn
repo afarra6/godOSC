@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://nqupygtbema1"]
+[gd_scene load_steps=8 format=3 uid="uid://nqupygtbema1"]
 
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCClient.gd" id="1_8dhcu"]
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver2.gd" id="5_qly6e"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/test_message.gd" id="5_sb0re"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/MessageContainer.gd" id="8_7cxcq"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -93,3 +94,36 @@ offset_bottom = 684.0
 text = "Use the toggles to enable/disable the sliders from sending OSC messages.
 If you are testing using an external program, disable the sliders for more
 predictable behavior."
+
+[node name="MessageContainer" type="GridContainer" parent="."]
+offset_left = 23.0
+offset_top = 18.0
+offset_right = 230.0
+offset_bottom = 68.0
+theme_override_constants/h_separation = 13
+columns = 3
+script = ExtResource("8_7cxcq")
+metadata/_edit_group_ = true
+
+[node name="Add" type="Label" parent="MessageContainer"]
+layout_mode = 2
+text = "Address"
+
+[node name="Val" type="Label" parent="MessageContainer"]
+layout_mode = 2
+text = "Value"
+
+[node name="Time" type="Label" parent="MessageContainer"]
+layout_mode = 2
+text = "Time Stamp"
+
+[node name="Add1" type="Label" parent="MessageContainer"]
+layout_mode = 2
+
+[node name="Val1" type="Label" parent="MessageContainer"]
+layout_mode = 2
+
+[node name="Time1" type="Label" parent="MessageContainer"]
+layout_mode = 2
+
+[connection signal="message_received" from="OSCServer" to="MessageContainer" method="_on_osc_server_message_received"]

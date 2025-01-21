@@ -19,6 +19,9 @@ var incoming_messages := {}
 var server = UDPServer.new()
 var peers: Array[PacketPeerUDP] = []
 
+signal message_received(address, value, time)
+
+
 func _ready():
 	server.listen(port)
 
@@ -64,6 +67,10 @@ func parse_message(packet: PackedByteArray):
 		match tag:
 			44: #,: comma
 				pass
+			70: #false
+				vals.append(false)
+			84: #true
+				vals.append(true)
 			105: #i: int32
 				var val = args.slice(0, 4)
 				val.reverse()
@@ -84,6 +91,10 @@ func parse_message(packet: PackedByteArray):
 			
 	
 	incoming_messages[address] = vals
+	
+	if vals is Array and len(vals) == 1:
+		vals = vals[0]
+	message_received.emit(address, vals, Time.get_time_string_from_system())
 
 
 #Handle and parse incoming bundles
@@ -143,6 +154,12 @@ func parse_bundle(packet: PackedByteArray):
 			match tag:
 				44: #,: comma
 					pass
+				70: #false
+					vals.append(false)
+					args = args.slice(4, args.size())
+				84: #true
+					vals.append(true)
+					args = args.slice(4, args.size())
 				105: #i: int32
 					var val = args.slice(0, 4)
 					val.reverse()
@@ -163,4 +180,4 @@ func parse_bundle(packet: PackedByteArray):
 				
 		print(address, " ", vals)
 		incoming_messages[address] = vals
-		
+		message_received.emit(address, vals, Time.get_time_string_from_system())

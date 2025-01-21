@@ -25,7 +25,7 @@ func _process(delta):
 	pass
 
 
-func update_message(value):
+func send_message(value):
 	
 	if value is Array and enabled:
 		target_client.send_message(osc_address, value)

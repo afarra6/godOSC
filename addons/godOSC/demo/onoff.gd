@@ -9,6 +9,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	# Enable/Disable sending OSC
 	get_parent().get_child(0).enabled = button_pressed
 	
 	pass
