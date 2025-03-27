@@ -9,9 +9,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	if target_server.incoming_messages.has(osc_address):
-		parent.position.x = target_server.incoming_messages[osc_address][0]
-	
-	#print(target_server.incoming_messages)
 	
 	pass

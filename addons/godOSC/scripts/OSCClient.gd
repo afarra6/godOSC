@@ -7,16 +7,19 @@ extends Node
 @export var ip_address = "127.0.0.1"
 ## The port to send to.
 @export var port = 4646
+
+
 var client = PacketPeerUDP.new()
 
 
 func _ready():
 	connect_socket(ip_address, port)
+	print(client.is_socket_connected())
 
 ## Connect to an OSC server. Can only send to one OSC server at a time.
 func connect_socket(new_ip = "127.0.0.1", new_port = 4646):
 	close_socket()
-	client.set_dest_address(new_ip, new_port)
+	client.connect_to_host(new_ip, new_port)
 
 func close_socket():
 	if client.is_socket_connected():
@@ -85,5 +88,6 @@ func prepare_message(osc_address : String, args : Array):
 	return packet
 
 func send_message(osc_address : String, args : Array):
-	var packet = prepare_message(osc_address, args)
-	client.put_packet(packet)
+	if client.is_socket_connected():
+		var packet = prepare_message(osc_address, args)
+		client.put_packet(packet)
