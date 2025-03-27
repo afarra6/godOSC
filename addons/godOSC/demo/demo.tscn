@@ -5,9 +5,9 @@
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver_cube1.gd" id="4_3wmat"]
 [ext_resource type="Script" path="res://addons/godOSC/scripts/OSCReceiver.gd" id="5_721s1"]
-[ext_resource type="Script" path="res://addons/godOSC/demo/test_message.gd" id="5_sb0re"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
 [ext_resource type="Script" path="res://addons/godOSC/demo/MessageContainer.gd" id="8_7cxcq"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCMessage.gd" id="8_m14bm"]
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_jcc48")
@@ -44,7 +44,7 @@ osc_address = "/cube2"
 parent_control_setting = 2
 apply_to_all_axis = true
 interpolation = true
-interpolation_factor = 0.125
+interpolation_factor = 0.013
 
 [node name="Cube 1 Slider" type="HSlider" parent="."]
 offset_left = 164.0
@@ -56,7 +56,7 @@ max_value = 675.0
 value = 300.0
 
 [node name="OSCMessage" type="Node" parent="Cube 1 Slider" node_paths=PackedStringArray("target_client")]
-script = ExtResource("5_sb0re")
+script = ExtResource("8_m14bm")
 target_client = NodePath("../../OSCClient")
 osc_address = "/cube1"
 
@@ -79,7 +79,7 @@ step = 0.01
 value = 1.0
 
 [node name="OSCMessage" type="Node" parent="Cube 2 Slider" node_paths=PackedStringArray("target_client")]
-script = ExtResource("5_sb0re")
+script = ExtResource("8_m14bm")
 target_client = NodePath("../../OSCClient")
 osc_address = "/cube2"
 
