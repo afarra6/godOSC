@@ -51,10 +51,10 @@ func _process(delta):
 	match send_message_on:
 		0:
 			if current_value != previous_value:
-				update_message(current_value)
+				send_message(current_value)
 				
 		1:
-			update_message(current_value)
+			send_message(current_value)
 			
 		3:
 			_custom_message_handling()
@@ -79,7 +79,7 @@ func get_parent_value():
 	
 	if message_contents == 3:
 		
-		update_message(_custom_message_contents())
+		send_message(_custom_message_contents())
 		
 		return
 	
@@ -121,4 +121,4 @@ func _custom_message_contents() -> Variant:
 	pass
 
 func using_timer():
-	update_message(current_value)
+	send_message(current_value)

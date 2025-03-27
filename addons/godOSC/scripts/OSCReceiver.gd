@@ -129,7 +129,8 @@ func _custom_control(address : String, vals : Array, time):
 
 
 func received_message(address, vals, time):
-	
+	if not vals is Array:
+		vals = [vals]
 	full_message = [address, vals, time]
 	if previous_value != vals:
 		incoming_values = vals
