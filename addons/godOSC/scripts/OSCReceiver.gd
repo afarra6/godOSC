@@ -19,6 +19,8 @@ extends Node
 ## How the OSCReceiver controls the parent node
 @export_enum("Custom", "Position", "Scale") var parent_control_setting = 0
 
+## For custom control, if true only runs the custom control code when a new message is received, otherwise runs the code continuosly. Note, this *must* be set to false to use interpolation in a custom message control. ie.:  using lerp() 
+@export var on_message_received = true
 ## Applys a single incoming value to all axis.
 @export var apply_to_all_axis := false
 
@@ -55,7 +57,11 @@ func _process(delta):
 	if interpolation and !apply_to_all_axis:
 		match parent_control_setting:
 			0:
-				_custom_control(full_message[0], full_message[1], full_message[2])
+				if !on_message_received:
+					_custom_control(full_message[0], full_message[1], full_message[2])
+					pass
+				else:
+					pass
 			1:
 				if parent is Node2D or parent is Control:
 					parent.global_position = lerp(parent.global_position, Vector2(incoming_values[0], incoming_values[1]) + Vector2(position_offset.x, position_offset.y), interpolation_factor)
@@ -70,7 +76,11 @@ func _process(delta):
 	elif !apply_to_all_axis:
 		match parent_control_setting:
 			0:
-				_custom_control(full_message[0], full_message[1], full_message[2])
+				if !on_message_received:
+					_custom_control(full_message[0], full_message[1], full_message[2])
+					pass
+				else:
+					pass
 			1:
 				if parent is Node2D or parent is Control:
 					parent.global_position = Vector2(incoming_values[0], incoming_values[0]) + Vector2(position_offset.x, position_offset.y)
@@ -86,7 +96,11 @@ func _process(delta):
 	if interpolation:
 		match parent_control_setting:
 			0:
-				_custom_control(full_message[0], full_message[1], full_message[2])
+				if !on_message_received:
+					_custom_control(full_message[0], full_message[1], full_message[2])
+					pass
+				else:
+					pass
 			1:
 				
 				if parent is Node2D or parent is Control:
@@ -102,7 +116,11 @@ func _process(delta):
 	else:
 		match parent_control_setting:
 			0:
-				_custom_control(full_message[0], full_message[1], full_message[2])
+				if !on_message_received:
+					_custom_control(full_message[0], full_message[1], full_message[2])
+					pass
+				else:
+					pass
 			1:
 				if parent is Node2D or parent is Control:
 					parent.global_position = Vector2(incoming_values[0], incoming_values[0]) + Vector2(position_offset.x, position_offset.y)
@@ -135,6 +153,8 @@ func received_message(address, vals, time):
 	if previous_value != vals:
 		incoming_values = vals
 		
-	
+	if parent_control_setting == 0 and on_message_received and address == osc_address:
+		_custom_control(full_message[0], full_message[1], full_message[2])
+		
 	
 	pass

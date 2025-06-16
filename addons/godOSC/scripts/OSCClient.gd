@@ -91,3 +91,4 @@ func send_message(osc_address : String, args : Array):
 	if client.is_socket_connected():
 		var packet = prepare_message(osc_address, args)
 		client.put_packet(packet)
+		

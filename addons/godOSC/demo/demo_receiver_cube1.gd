@@ -7,4 +7,6 @@ extends OSCReceiver
 func _custom_control(address : String, vals : Array, time):
 	if vals != []:
 		parent.position.x = vals[0]
+	
+	#print("what the heck")
 	pass

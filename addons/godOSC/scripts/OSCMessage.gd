@@ -58,6 +58,7 @@ func _process(delta):
 			
 		3:
 			_custom_message_handling()
+	
 	previous_value = current_value
 	
 	pass
