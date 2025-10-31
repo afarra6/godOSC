@@ -14,7 +14,6 @@ var client = PacketPeerUDP.new()
 
 func _ready():
 	connect_socket(ip_address, port)
-	print(client.is_socket_connected())
 
 ## Connect to an OSC server. Can only send to one OSC server at a time.
 func connect_socket(new_ip = "127.0.0.1", new_port = 4646):
