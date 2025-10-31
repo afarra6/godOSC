@@ -94,7 +94,7 @@ func parse_message(packet: PackedByteArray):
 	
 	if vals is Array and len(vals) == 1:
 		vals = vals[0]
-	message_received.emit(address, vals, Time.get_time_string_from_system())
+	message_received.emit(address, vals, Time.get_unix_time_from_system())
 
 
 #Handle and parse incoming bundles
@@ -180,4 +180,4 @@ func parse_bundle(packet: PackedByteArray):
 				
 		print(address, " ", vals)
 		incoming_messages[address] = vals
-		message_received.emit(address, vals, Time.get_time_string_from_system())
+		message_received.emit(address, vals, Time.get_unix_time_from_system())
