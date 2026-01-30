@@ -28,6 +28,7 @@ func _ready():
 ## Sets the port for the server to listen on. Can only listen to one port at a time.
 func listen(new_port):
 	port = new_port
+	server.stop()
 	server.listen(port)
 
 func _process(_delta):
