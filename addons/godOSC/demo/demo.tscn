@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://nqupygtbema1"]
 
-[ext_resource type="Script" uid="uid://xi7uy8bnjk3a" path="res://addons/godOSC/scripts/OSCClient.gd" id="1_8dhcu"]
-[ext_resource type="Script" uid="uid://n446mw85sbns" path="res://addons/godOSC/demo/demo.gd" id="1_jcc48"]
-[ext_resource type="Script" uid="uid://w8v0v76wc4r2" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
-[ext_resource type="Script" uid="uid://bo023cplul547" path="res://addons/godOSC/demo/demo_receiver_cube1.gd" id="4_3wmat"]
-[ext_resource type="Script" uid="uid://tdoy6n5ivl2p" path="res://addons/godOSC/scripts/OSCReceiver.gd" id="5_721s1"]
-[ext_resource type="Script" uid="uid://dxq8lko4ilo38" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
-[ext_resource type="Script" uid="uid://njq2yjcx4gqt" path="res://addons/godOSC/demo/MessageContainer.gd" id="8_7cxcq"]
-[ext_resource type="Script" uid="uid://b0pkndrhr65ph" path="res://addons/godOSC/scripts/OSCMessage.gd" id="8_m14bm"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCClient.gd" id="1_8dhcu"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/demo.gd" id="1_jcc48"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="2_ey2x6"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/demo_receiver_cube1.gd" id="4_3wmat"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCReceiver.gd" id="5_721s1"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/onoff.gd" id="6_4gcvd"]
+[ext_resource type="Script" path="res://addons/godOSC/demo/MessageContainer.gd" id="8_7cxcq"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCMessage.gd" id="8_m14bm"]
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_jcc48")
@@ -17,6 +17,7 @@ script = ExtResource("1_8dhcu")
 
 [node name="OSCServer" type="Node" parent="."]
 script = ExtResource("2_ey2x6")
+timecode_as_unix = true
 
 [node name="Cube 1" type="ColorRect" parent="."]
 offset_left = 154.0
@@ -38,8 +39,9 @@ offset_right = 963.0
 offset_bottom = 184.0
 scale = Vector2(1.075, 1.075)
 
-[node name="OSCReceiver" type="Node" parent="Cube 2"]
+[node name="OSCReceiver" type="Node" parent="Cube 2" node_paths=PackedStringArray("target_server")]
 script = ExtResource("5_721s1")
+target_server = NodePath("../../OSCServer")
 osc_address = "/cube2"
 parent_control_setting = 2
 apply_to_all_axis = true
@@ -148,8 +150,9 @@ offset_bottom = 620.0
 text = "SEND \"/synth1/gate 0\"
  ON PORT 4848"
 
-[node name="OSCMessage" type="Node" parent="GateOff"]
+[node name="OSCMessage" type="Node" parent="GateOff" node_paths=PackedStringArray("target_client")]
 script = ExtResource("8_m14bm")
+target_client = NodePath("../../OSCClient")
 metadata/_custom_type_script = "uid://b0pkndrhr65ph"
 
 [node name="OSCClient - OUT" type="Node" parent="."]
