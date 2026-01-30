@@ -7,6 +7,9 @@ extends Node
 ## The port over which to recieve messages
 @export var port = 4646
 
+## Sets the timecode sent in the message_recieved signal to be in unix time (greater precision, less readable)
+@export var timecode_as_unix = false
+
 ## A dictionary containing all recieved messages.
 var incoming_messages := {}
 
@@ -94,7 +97,12 @@ func parse_message(packet: PackedByteArray):
 	
 	if vals is Array and len(vals) == 1:
 		vals = vals[0]
-	message_received.emit(address, vals, Time.get_time_string_from_system())
+	
+	if !timecode_as_unix:
+		message_received.emit(address, vals, Time.get_time_string_from_system())
+	else:
+		message_received.emit(address, vals, Time.get_unix_time_from_system())
+
 
 
 #Handle and parse incoming bundles
@@ -180,4 +188,8 @@ func parse_bundle(packet: PackedByteArray):
 				
 		print(address, " ", vals)
 		incoming_messages[address] = vals
-		message_received.emit(address, vals, Time.get_time_string_from_system())
+		
+		if !timecode_as_unix:
+			message_received.emit(address, vals, Time.get_time_string_from_system())
+		else:
+			message_received.emit(address, vals, Time.get_unix_time_from_system())
